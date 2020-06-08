@@ -75,7 +75,6 @@ def create_app(test_config=None):
           'questions': current_questions,
           'total_questions': len(Question.query.all()),
           'categories' :categories,
-          'current_category': None,
       })    
   '''
   @TODO: 
@@ -147,7 +146,7 @@ def create_app(test_config=None):
   only question that include that string within their question. 
   Try using the word "title" to start. 
   '''
-  @app.route('/searchQuestions', methods=['POST'])
+  @app.route('/search', methods=['POST'])
   def search_questions():
       if request.data:
             body = request.get_json()
@@ -165,8 +164,8 @@ def create_app(test_config=None):
                     })
                 else:
                     return jsonify({
-                        "success": False,
-                        "message": "Word does not exist"
+                        'success': False,
+                        'message': 'Word does not exist'
                    })       
       abort(422)
 
@@ -195,8 +194,8 @@ def create_app(test_config=None):
             })
         else:
             return jsonify({
-                "success": False,
-                "message": "category does not exist"
+                'success': False,
+                'message': 'category does not exist'
              })
         abort(422)
 
@@ -220,13 +219,13 @@ def create_app(test_config=None):
                 available_question = len(questions_query)
                 if available_question > 0:
                     result = {
-                        "success": True,
-                        "question": Question.format(questions_query[random.randrange(0,available_question)])
+                        'success': True,
+                        'question': Question.format(questions_query[random.randrange(0,available_question)])
                     }
                 else:
                     result = {
-                        "success": True,
-                        "question": None
+                        'success': True,
+                        'question': None
                     }
                 return jsonify(result)
             abort(404)
@@ -241,42 +240,43 @@ def create_app(test_config=None):
   @app.errorhandler(400)
   def bad_request(error):
       return jsonify({
-            'success': False,
-            'error': 400,
-            'message': 'Bad request error'
+          'success': False,
+          'error': 400,
+          'message': 'Bad request error'
         }), 400
 
   @app.errorhandler(404)
   def not_found(error):
       return jsonify({
           'success': False,
-           'error': 404,
-           'message': 'Resource not found'
-        }), 404
+          'error': 404,
+          'message': 'Resource not found'
+    }), 404
+
+  @app.errorhandler(405)
+  def not_found(error):
+      return jsonify({
+          'success': False, 
+          'error': 405,
+          'message': 'method not allowed'
+        }), 405      
+
+  @app.errorhandler(422)
+  def unprocesable(error):
+      return jsonify({
+           'success': False,
+            'error': 422,
+            'message': 'unprocessable'
+    }), 422
 
   @app.errorhandler(500)
   def internal_server_error(error):
       return jsonify({
           'success': False,
           'error': 500,
-          'message': 'An error has occured, please try again'
-        }), 500
-
-  @app.errorhandler(422)
-  def unprocesable_entity(error):
-       return jsonify({
-           'success': False,
-            'error': 422,
-            'message': 'Unprocessable entity'
-        }), 422
-
-  @app.errorhandler(405)
-  def not_found(error):
-      return jsonify({
-          "success": False, 
-          "error": 405,
-          "message": "method not allowd"
-        }), 405          
+          'message': 'internal server error'
+        }), 500        
+  
   
   return app
 
