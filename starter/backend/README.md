@@ -159,8 +159,8 @@ The API will return three error types when requests fail:
 ```
 #### GET/questions
 - General : 
- - return all questions are paginated in groups of 10
- - return all categories
+   - return all questions are paginated in groups of 10
+   - return all categories
 - Sample : `curl http://127.0.0.1:5000/questions`
 ```
 {
@@ -434,10 +434,10 @@ The API will return three error types when requests fail:
   "total_questions": 21
 }
 ```
-#### POST /searchQuestions
+#### POST /search
 - General:
    - Search for questions using search term and return the question match with search term
-- Sample : `curl http://127.0.0.1:5000/searchQuestions -X POST -H "Content-Type: application/json" -d '{"searchTerm": "what"}'`
+- Sample : `curl http://127.0.0.1:5000/search -X POST -H "Content-Type: application/json" -d '{"searchTerm": "what"}'`
 ```
 {
   "questions": [
