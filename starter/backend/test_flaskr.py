@@ -41,13 +41,13 @@ class TriviaTestCase(unittest.TestCase):
                 'type': 'Science',
                 'id': 1
             }
-        }
-        self.quiz_error = {
+            }
+            self.quiz_error = {
             'previous_questions': [],
             'quiz_category': {
                 'type': 'Science',
             }
-        }
+            }
            
     def tearDown(self):
         """Executed after reach test"""
